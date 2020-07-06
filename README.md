@@ -1,7 +1,7 @@
 ## Visual Recognition PHP
 
-![](images/Screenshot1.png)
-![](images/Screenshot2.png)
+![](images/screenshoot1.png)
+![](images/screenshoot2.png)
  
 ### IMPORTANTE: Se necesita api key de IBM.
 ### Descripción:
