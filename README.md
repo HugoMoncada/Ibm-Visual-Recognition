@@ -1,17 +1,19 @@
-# visualRecognitionPHP
+## Visual Recognition PHP
+
+![](images/Screenshot1.png)
+![](images/Screenshot2.png)
  
-!IMPORTANTE: Se necesita api key de IBM.
- 
-Descripción:
+### IMPORTANTE: Se necesita api key de IBM.
+### Descripción:
    Aplicación web creada con HTML, CSS Y PHP, que permite mostrar de una forma visual e intuitiva el resultado de consultar el servicio de
    reconocimiento de imágenes (IBM watson visual recognition) al pasarle a la interfaz una url de una imagen lo cual dará como resultado una tabla
    con la respuesta dada por IBM watson visual recognition y también permite tomar una foto y enviarla al ibm watson recognition system retornando una respuesta.
  
-Requisitos para su uso:
+### Requisitos para su uso:
        -Xammp.
          -Conexión a internet para mostrar la interfaz por medio de cdn de Bootstrap.
  
-Pasos:
+### Pasos:
    1. Copiar la carpeta "IbmImagePhp" encontrada en el archivo .zip dentro de la carpeta htdocs de Xampp.
        -En la carpeta dentro de controllers en consulta.php ingresar tu api key
    2. Inicializar Xammp.
