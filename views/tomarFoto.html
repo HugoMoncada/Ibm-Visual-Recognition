@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+     <link rel="stylesheet" href="../styles/styles.css"> 
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="jquery-3.5.1.min.js"></script>
+      <title>Document</title>
+</head>
+<body>
+  
+    <nav class="navegacion navbar navbar-expand-lg navbar-dark bg-transparent mb-4">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">IBM Watson</a>
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Tomar Foto <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>         
+        </div>
+      </nav>
+
+    <div class="container text-center">
+        <h1 class="text-center mb-3">TOMA UNA FOTO</h1>
+        <div class="row">
+                <div id="my_camera" class="col align-self-center mb-3" ></div>
+        </div>
+        
+        <input id="boton" class="btn btn-primary btn-lg" type=button value="Tomar Foto" onClick="take_snapshot()">
+        <!-- Este es el canvas que tiene los datos pero lo oculté -->
+        <div id="results"></div>
+
+
+        <h3 id="procesando">PROCESANDO....</h3>
+    </div>
+     
+
+      
+   
+     
+     <script language="JavaScript">
+       
+        //Oculto el canvas en el que se tomo la captura. 
+        document.getElementById("results").style.display = "none"
+        document.getElementById("procesando").style.display = "none"
+
+        // Configuracion de la camara
+        Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: 'jpeg',
+        jpeg_quality: 90        
+        });
+        Webcam.attach( '#my_camera' );
+        console.log("levantado la camara");   
+
+
+         //Se crea un objeto con la string de la imagen base64
+        function myFunction(img) {
+            
+            var image = {
+                'name': img
+            };
+
+            //Se vuelve string para enviar 
+            var imgStr = JSON.stringify(image);
+
+            $.ajax({
+                //Se envia al servicio que sube la imagen
+                url: '../controllers/subirImagenTomada.php',
+                type: 'post',
+                data: {image: imgStr},
+
+                success: function(response){
+                    //esta es la respuesta del servicio que sube la imagen
+                    //retorna la url de la imagen tomada
+                    var url = response;
+                    //Llamo la parte del programa que colsulta a watson
+                    llamarWatson(url);
+                }
+            });
+   
+        }
+
+        function take_snapshot() {      
+            // take snapshot and get image data
+            Webcam.snap( function(data_uri) {
+              
+            // display results in page
+            document.getElementById('results').innerHTML = 
+            '<img src="'+data_uri+'"/>';
+            
+            //console.log(data_uri);
+                myFunction(data_uri);
+                document.getElementById("procesando").style.display = "block"
+                document.getElementById("my_camera").style.display = "none"
+                document.getElementById("boton").style.display = "none"
+            } );
+        }
+
+
+        //Creo un formulario para enviar la url a watson 
+        function llamarWatson(response) {
+            var form = document.createElement("form");
+            var element1 = document.createElement("input"); 
+
+            form.method = "POST";
+            form.action = "../controllers/consulta.php";   
+
+            element1.value=response;
+            element1.name="imagen";
+            form.appendChild(element1);  
+
+            document.body.appendChild(form);
+
+            form.submit();
+        }
+
+     </script>
+
+
+     
+</body>
+</html>
