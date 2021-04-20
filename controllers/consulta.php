@@ -22,7 +22,7 @@ Guias:
      // echo $imagen;
 
      //LA APIKEY ENVIADA POR ACA NO LA RECONOCE SE PUEDE QUITAR!!
-     $url = 'https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?api_key=CoKh1p1CiJMm_DC2hFva_09ii0-073sPhyk2k82Y9JCP&version=2018-03-19';
+     $url = 'https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?api_key=[APIKEY];
 
      $apiKey= "YOUR API KEY HERE";
 
@@ -39,7 +39,7 @@ Guias:
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
      curl_setopt($ch, CURLOPT_POST, 1); 
      curl_setopt($ch, CURLOPT_POSTFIELDS, $image_url . $classifier . $threshold); 
-     //SIN ESTA MIERDA NO FUNCIONA, ACA ES DONDE RECONOCE LA APIKEY, SIN ESTO TIRA 401
+     //SIN ESTO NO FUNCIONA, ACA ES DONDE RECONOCE LA APIKEY, SIN ESTO TIRA 401
      curl_setopt($ch, CURLOPT_USERPWD, 'apikey:' . $apiKey);
      
 
@@ -57,7 +57,7 @@ Guias:
      // Verifico el resultado
      if(isset($objeto['images'][0]['error'])){
           //En caso de haber algo mal con la imagen el json vuelve con un error
-          // echo 'Ahora si la cagamos';
+          // echo 'Error';
           $_SESSION['resultado']= 'Error';
           header("Location: ../views/respuesta.php");
           
